@@ -19,5 +19,7 @@ require_once(CORE.'/common/function.php');
  * 引入框架
  */
 require_once(CORE.'/start.php');
-
+/**
+ * 启动框架
+ */
 \core\Smart::run();

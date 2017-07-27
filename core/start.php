@@ -10,14 +10,28 @@ class Smart
 	public function __construct(){
 
 	}
+	/**
+	 * 执行方法
+	 * BaZhang Platform
+	 * @Author   Jacklin@shouyiren.net
+	 * @DateTime 2017-07-27T18:28:41+0800
+	 * @return   void                   [description]
+	 */
 	public static function run(){
 		try {
 		spl_autoload_register("self::autoLoad");
-		$route = new \core\Route();	
 		} catch (Exception $e) {
 			dd($e->getMessage());
 		}
 	}
+	/**
+	 * 自动加载方法
+	 * BaZhang Platform
+	 * @Author   Jacklin@shouyiren.net
+	 * @DateTime 2017-07-27T18:29:24+0800
+	 * @param    [type]                   $class 需要加载的类方法
+	 * @return   boolean                          
+	 */
 	public static function autoLoad($class){
 		if (isset(self::$classMap[$class])) {
 			return true;
