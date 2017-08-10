@@ -56,7 +56,14 @@ class Smart
 				return true;
 			}else{
 				$class = str_replace(APP_NAMESPACE, APP_NAME, $class);
-				return self::autoLoad($class);
+				$class_fromat = str_replace('\\', '/', $class);
+				$class_file = strtolower(ROOT_PATH.'/'.$class_fromat.'.php');
+				if (is_file($class_file)) {
+					include($class_file);
+					self::$classMap[$class] = $class_file;
+					return true;
+				}
+				return false;
 			}
 		}
 	}
@@ -65,6 +72,7 @@ class Smart
 		$controller = self::parseName(Route::getController(),1);
 
 		$class = '\\'.APP_NAMESPACE.'\\'.DEFAULT_MODULE.'\\controller\\'.$controller;
+
 		$app = new $class();
 		/**
 		 * 访问应用方法
