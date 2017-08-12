@@ -1,10 +1,6 @@
 <?php 
-return [
-	'group' =>[
-		'name' => 'app',
-		[
-			'Index/index',
-			'i',
-		]
-	]
-]
+use core\Route;
+
+Route::get('Index/index',function(){
+	echo "call get";
+});

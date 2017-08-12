@@ -1,7 +1,7 @@
 <?php 
 namespace core;
 
-use core\lib\Route;
+use core\lib\Request;
 /**
 * 
 */
@@ -13,10 +13,10 @@ class Smart
 	 */
 	public static $classMap;
 	/**
-	 * 路由
-	 * @var Route
+	 * 请求
+	 * @var Request
 	 */
-	public static $route;
+	public static $request;
 
 	public function __construct(){
 
@@ -31,7 +31,7 @@ class Smart
 	public static function run(){
 		try {
 			spl_autoload_register("self::autoLoad");
-			self::initRoute();
+			self::initRequest();
 		} catch (Exception $e) {
 			dd($e->getMessage());
 		}
@@ -67,9 +67,11 @@ class Smart
 			}
 		}
 	}
-	private static function initRoute(){
-		$action = self::parseName(Route::getAction());
-		$controller = self::parseName(Route::getController(),1);
+	private static function initRequest(){
+		$action = self::parseName(Request::getAction());
+		$controller = self::parseName(Request::getController(),1);
+
+		
 
 		$class = '\\'.APP_NAMESPACE.'\\'.DEFAULT_MODULE.'\\controller\\'.$controller;
 
@@ -78,7 +80,7 @@ class Smart
 		 * 访问应用方法
 		 * @var [type]
 		 */
-		$result = $app->$action(Route::getRequestParam());
+		$result = $app->$action(Request::getRequestParam());
 	}
 	/**
 	 * 解析类名

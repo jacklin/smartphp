@@ -17,7 +17,7 @@ if (!function_exists('dd')) {
 		}elseif (is_string($debugContent)) {
 			echo $debugContent;
 		}else{
-			print_r($debugContent);
+			var_dump($debugContent);
 		}
 		echo '</pre>';
 		exit;
