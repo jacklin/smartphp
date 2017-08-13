@@ -6,6 +6,11 @@ namespace core\lib;
 class Route
 {
 	/**
+	 * 
+	 * @var 路由规则表
+	 */
+	public static $ruleMap;
+	/**
 	 * 设置路由规则
 	 * @return [type] [description]
 	 */
@@ -24,7 +29,7 @@ class Route
 					case 'get':
 						[$action, $param] = $expression;
 						if (strstr($param, ':')) {
-							
+							self::$ruleMap[$realpath] = isset(self::$ruleMap[$realpath]) ? self::$ruleMap[$realpath] : $expression;
 						}
 						break;
 					
