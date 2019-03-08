@@ -15,6 +15,8 @@ define('DEFAULT_MODULE','module');
 define('DEBUG',true);
 //目录分隔符定义
 define('DS',DIRECTORY_SEPARATOR);
+//composer提供商目录
+defined('VENDOR_PATH') or define('VENDOR_PATH', ROOT_PATH. DS . 'vendor' . DS);
 
 if (DEBUG === true) {
 	ini_set('display_errors', 'on');

@@ -30,6 +30,7 @@ class Smart
 	 */
 	public static function run(){
 		try {
+			self::initAutoLoad();
 			spl_autoload_register("self::autoLoad");
 			self::initRequest();
 		} catch (Exception $e) {
@@ -45,6 +46,7 @@ class Smart
 	 * @return   boolean                          
 	 */
 	public static function autoLoad($class){
+
 		if (isset(self::$classMap[$class])) {
 			return true;
 		}else{
@@ -67,6 +69,32 @@ class Smart
 			}
 		}
 	}
+	/**
+	 * 自动加载目录
+	 * BaZhang Platform
+	 * @Author   Jacklin@shouyiren.net
+	 * @DateTime 2019-03-08T17:47:49+0800
+	 * @return   [type]                   [description]
+	 */
+	public static function initAutoLoad()
+	{
+	    // Composer 自动加载支持
+	    if (is_dir(VENDOR_PATH . 'composer')) {
+	        self::registerComposerLoader();
+	    }
+	}
+	/**
+	 * 注册 composer 自动加载
+	 * @access private
+	 * @return void
+	 */
+	private static function registerComposerLoader()
+	{
+	    if (is_file(VENDOR_PATH . 'autoload.php')) {
+	        require VENDOR_PATH . 'autoload.php';
+	    }
+	}
+
 	private static function initRequest(){
 		$action = self::parseName(Request::getAction());
 		$controller = self::parseName(Request::getController(),1);
