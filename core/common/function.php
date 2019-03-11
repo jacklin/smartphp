@@ -17,9 +17,24 @@ if (!function_exists('dd')) {
 		}elseif (is_string($debugContent)) {
 			echo $debugContent;
 		}else{
-			var_dump($debugContent);
+			print_r($debugContent);
 		}
 		echo '</pre>';
 		exit;
+	}
+}
+if (!function_exists('ee')) {
+	function ee($tipContent,$outPutContent){
+		echo $tipContent.ucfirst($key).":".$value.PHP_EOL;
+		if (is_array($outPutContent)) {
+			foreach ($outPutContent as $key => $value) {
+				ee($tipContent,$value);
+			}
+		}
+	}
+}
+if (!function_exists('format_response_data')) {
+	function format_response_data(array $data, $options=0){
+		return json_encode($data,$options);
 	}
 }

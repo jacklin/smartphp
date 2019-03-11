@@ -1,6 +1,6 @@
 <?php 
 namespace core\lib;
-use core\lib\Request;
+
 /**
 * 
 */
@@ -14,7 +14,7 @@ class Controller
 	 * @return   boolean                  [description]
 	 */
 	protected function isGet(){
-		if (strtolower(Request::requestCategory()) == 'get') {
+		if (strtolower(Route::requestCategory()) == 'get') {
 			return true;
 		}else{
 			return false;
@@ -28,7 +28,7 @@ class Controller
 	 * @return   boolean                  [description]
 	 */
 	protected function isPost(){
-		if (strtolower(Request::requestCategory()) == 'post') {
+		if (strtolower(Route::requestCategory()) == 'post') {
 			return true;
 		}else{
 			return false;

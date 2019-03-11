@@ -1,7 +1,7 @@
 <?php 
 namespace core;
 
-use core\lib\Request;
+use core\lib\Route;
 /**
 * 
 */
@@ -13,10 +13,10 @@ class Smart
 	 */
 	public static $classMap;
 	/**
-	 * 请求
-	 * @var Request
+	 * 路由
+	 * @var Route
 	 */
-	public static $request;
+	public static $route;
 
 	public function __construct(){
 
@@ -29,10 +29,12 @@ class Smart
 	 * @return   void                   [description]
 	 */
 	public static function run(){
+		if (!is_dir(RUNTIME_PATH)) {
+			mkdir(RUNTIME_PATH);
+		}
 		try {
-			self::initAutoLoad();
 			spl_autoload_register("self::autoLoad");
-			self::initRequest();
+			// self::initRoute();
 		} catch (Exception $e) {
 			dd($e->getMessage());
 		}
@@ -46,12 +48,12 @@ class Smart
 	 * @return   boolean                          
 	 */
 	public static function autoLoad($class){
-
 		if (isset(self::$classMap[$class])) {
 			return true;
 		}else{
 			$class_fromat = str_replace('\\', '/', $class);
 			$class_file = strtolower(ROOT_PATH.'/'.$class_fromat.'.php');
+		// echo $class_file;die;
 			if (is_file($class_file)) {
 				include($class_file);
 				self::$classMap[$class] = $class_file;
@@ -69,37 +71,9 @@ class Smart
 			}
 		}
 	}
-	/**
-	 * 自动加载目录
-	 * BaZhang Platform
-	 * @Author   Jacklin@shouyiren.net
-	 * @DateTime 2019-03-08T17:47:49+0800
-	 * @return   [type]                   [description]
-	 */
-	public static function initAutoLoad()
-	{
-	    // Composer 自动加载支持
-	    if (is_dir(VENDOR_PATH . 'composer')) {
-	        self::registerComposerLoader();
-	    }
-	}
-	/**
-	 * 注册 composer 自动加载
-	 * @access private
-	 * @return void
-	 */
-	private static function registerComposerLoader()
-	{
-	    if (is_file(VENDOR_PATH . 'autoload.php')) {
-	        require VENDOR_PATH . 'autoload.php';
-	    }
-	}
-
-	private static function initRequest(){
-		$action = self::parseName(Request::getAction());
-		$controller = self::parseName(Request::getController(),1);
-
-		
+	private static function initRoute(){
+		$action = self::parseName(Route::getAction());
+		$controller = self::parseName(Route::getController(),1);
 
 		$class = '\\'.APP_NAMESPACE.'\\'.DEFAULT_MODULE.'\\controller\\'.$controller;
 
@@ -108,7 +82,7 @@ class Smart
 		 * 访问应用方法
 		 * @var [type]
 		 */
-		$result = $app->$action(Request::getRequestParam());
+		$result = $app->$action(Route::getRequestParam());
 	}
 	/**
 	 * 解析类名
