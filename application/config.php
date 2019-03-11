@@ -1,0 +1,42 @@
+<?php 
+return [
+	/**
+	 * redis数据库配置
+	 */
+	'redis' => [
+		'cluster' => [
+			[
+				'host' => CACHE_HOST_1,
+				'port' => 6379,
+				'database' => CACHE_DB_SERIAL,
+				'password' => CACHE_PWD_1,
+				'alias' => 'first',
+			],
+			[
+				'host' => CACHE_HOST_1,
+				'port' => 6379,
+				'database' => 3,
+				'password' => CACHE_PWD_1,
+				'alias' => 'second',
+			]
+		],
+		'single' => [
+			'host' => CACHE_HOST_1,
+			'port' => 6379,
+			'database' => CACHE_DB_SERIAL,
+			'password' => CACHE_PWD_1,
+		]
+	],
+	/**
+	 * 接口响应代码
+	 */
+	'error_code' => [
+		'4200' =>	'业务处理成功',
+		'4001' =>	'授权权限不足',
+		'4011' =>	'缺少必选参数',
+		'4002' =>	'非法的参数',
+		'4004' =>	'业务处理失败',
+		'4000' =>	'业务处理中断',
+		'4404' =>	'暂无数据',
+	]
+];

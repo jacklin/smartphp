@@ -53,7 +53,7 @@ class Smart
 		}else{
 			$class_fromat = str_replace('\\', '/', $class);
 			$class_file = strtolower(ROOT_PATH.'/'.$class_fromat.'.php');
-		// echo $class_file;die;
+		echo $class_file;
 			if (is_file($class_file)) {
 				include($class_file);
 				self::$classMap[$class] = $class_file;

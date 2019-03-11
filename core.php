@@ -12,11 +12,11 @@ define('APP_PATH',ROOT_PATH.DS.APP_NAME);
 //应用命令空间
 define('APP_NAMESPACE','api');
 //默认模块
-define('DEFAULT_MODULE','websocket');
+define('DEFAULT_MODULE','module');
 //配置文件后缀
 define('CONF_EXT','.php');
 //运行目录
-define('RUNTIME_PATH',ROOT_PATH.DS.'runtime');
+define('RUNTIME_PATH',ROOT_PATH . DS . 'runtime');
 
 //是否调试
 define('DEBUG',true);
@@ -30,15 +30,15 @@ if (DEBUG === true) {
 /**
  * 引入框架函数库
  */
-require_once(CORE.'/common/function.php');
+require_once(CORE . DS. 'common' . DS . 'function.php');
 /**
  * 引入框架
  */
-require_once(CORE.'/start.php');
+require_once(CORE . DS. 'start.php');
 /**
  * 引入第三方类库
  */
-require_once(ROOT_PATH.'/vendor/autoload.php');
+require_once(ROOT_PATH . DS . 'vendor' . DS . 'autoload.php');
 /**
  * 启动框架
  */
