@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'Predis\\' => array($vendorDir . '/predis/predis/src'),
     'Klein\\' => array($vendorDir . '/klein/klein/src/Klein'),
+    'Curl\\' => array($vendorDir . '/php-curl-class/php-curl-class/src/Curl'),
 );

@@ -32,8 +32,10 @@ class Route
 	 * @Author   Jacklin@shouyiren.net
 	 * @DateTime 2017-07-28T14:18:40+0800
 	 */
-	public function __construct(){
-	 	$request_uri = $_SERVER['REQUEST_URI']??'';
+	public function __construct($request){
+
+	 	$request_uri = $_SERVER['REQUEST_URI']??$request->server['request_uri'];
+
 	 	$uri_arrays = explode('/', trim($request_uri,'/'));
 	 	$i = 0;
 	 	if (isset($uri_arrays[$i]) && !empty($uri_arrays[$i])) {
@@ -72,11 +74,11 @@ class Route
 	 * @DateTime 2017-07-28T14:18:57+0800
 	 * @return   [type]                   [description]
 	 */
-	private static function getInstance(){
+	private static function getInstance($request=''){
 		if (self::$route instanceof self) {
 			return self::$route;
 		}else{
-			self::$route = new self();
+			self::$route = new self($request);
 			return self::$route;
 		}
 	}
@@ -111,8 +113,8 @@ class Route
 	 * @DateTime 2017-07-28T16:31:44+0800
 	 * @return   string                   方法名称
 	 */
-	public static function getAction(){
-		return self::getInstance()->action;
+	public static function getAction($request=''){
+		return self::getInstance($request)->action;
 	}
 	/**
 	 * 获取访问控制器
@@ -121,8 +123,8 @@ class Route
 	 * @DateTime 2017-07-28T16:32:20+0800
 	 * @return   [type]                   [description]
 	 */
-	public static function getController(){
-		return self::getInstance()->controller;
+	public static function getController($request=''){
+		return self::getInstance($request)->controller;
 	}
 	/**
 	 * 设置请求参数

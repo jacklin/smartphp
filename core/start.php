@@ -28,13 +28,32 @@ class Smart
 	 * @DateTime 2017-07-27T18:28:41+0800
 	 * @return   void                   [description]
 	 */
+
 	public static function run(){
 		if (!is_dir(RUNTIME_PATH)) {
 			mkdir(RUNTIME_PATH);
 		}
 		try {
 			spl_autoload_register("self::autoLoad");
-			// self::initRoute();
+			IS_CLI?'':self::initRoute('','');
+		} catch (Exception $e) {
+			dd($e->getMessage());
+		}
+	}
+	/**
+	 * web执行方法
+	 * BaZhang Platform
+	 * @Author   Jacklin@shouyiren.net
+	 * @DateTime 2017-07-27T18:28:41+0800
+	 * @return   void                   [description]
+	 */
+	public static function webrun($request='', $response=''){
+		if (!is_dir(RUNTIME_PATH)) {
+			mkdir(RUNTIME_PATH);
+		}
+		try {
+			spl_autoload_register("self::autoLoad");
+			self::initRoute($request, $response);
 		} catch (Exception $e) {
 			dd($e->getMessage());
 		}
@@ -53,7 +72,7 @@ class Smart
 		}else{
 			$class_fromat = str_replace('\\', '/', $class);
 			$class_file = strtolower(ROOT_PATH.'/'.$class_fromat.'.php');
-		echo $class_file;
+
 			if (is_file($class_file)) {
 				include($class_file);
 				self::$classMap[$class] = $class_file;
@@ -71,13 +90,13 @@ class Smart
 			}
 		}
 	}
-	private static function initRoute(){
-		$action = self::parseName(Route::getAction());
-		$controller = self::parseName(Route::getController(),1);
+	private static function initRoute($request='', $response=''){
+		$action = self::parseName(Route::getAction($request));
+		$controller = self::parseName(Route::getController($request),1);
 
 		$class = '\\'.APP_NAMESPACE.'\\'.DEFAULT_MODULE.'\\controller\\'.$controller;
 
-		$app = new $class();
+		$app = new $class($request,$response);
 		/**
 		 * 访问应用方法
 		 * @var [type]

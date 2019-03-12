@@ -2,5 +2,8 @@
     "require": {
         "klein/klein": "^2.1",
         "predis/predis": "^1.1"
+    },
+    "require-dev": {
+        "jacklin/sign": "dev-develop"
     }
 }

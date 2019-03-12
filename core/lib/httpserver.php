@@ -7,8 +7,10 @@ class HttpServer {
     public $server;
 
     public function __construct($host, $port, $option=[]) {
-        $this->server = new \Swoole\Http\Server($host, $port);
-        !empty($option)?$this->server->set($option):'';//array('worker_num' => 4,'daemonize' => false,'backlog' => 128,)
+        if (IS_CLI) {
+            $this->server = new \Swoole\Http\Server($host, $port);
+            !empty($option)?$this->server->set($option):'';//array('worker_num' => 4,'daemonize' => false,'backlog' => 128,)
+        }
     }
 
    

@@ -27,6 +27,18 @@ if (DEBUG === true) {
 	ini_set('display_errors', 'off');
 }
 
+switch (php_sapi_name()) {
+	case 'fpm-fcgi':
+		define('IS_CLI', FALSE);
+		break;
+	case 'cli':
+		define('IS_CLI', true);
+		break;
+	
+	default:
+
+		break;
+}
 /**
  * 引入框架函数库
  */
@@ -39,7 +51,4 @@ require_once(CORE . DS. 'start.php');
  * 引入第三方类库
  */
 require_once(ROOT_PATH . DS . 'vendor' . DS . 'autoload.php');
-/**
- * 启动框架
- */
-\core\Smart::run();
+

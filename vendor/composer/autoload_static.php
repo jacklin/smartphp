@@ -15,6 +15,10 @@ class ComposerStaticInit1ddbe4a32494cc166ee1d43f9f1c4aaa
         array (
             'Klein\\' => 6,
         ),
+        'C' => 
+        array (
+            'Curl\\' => 5,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -26,6 +30,20 @@ class ComposerStaticInit1ddbe4a32494cc166ee1d43f9f1c4aaa
         array (
             0 => __DIR__ . '/..' . '/klein/klein/src/Klein',
         ),
+        'Curl\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'T' => 
+        array (
+            'Tool' => 
+            array (
+                0 => __DIR__ . '/..' . '/jacklin/sign/src',
+            ),
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -33,6 +51,7 @@ class ComposerStaticInit1ddbe4a32494cc166ee1d43f9f1c4aaa
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit1ddbe4a32494cc166ee1d43f9f1c4aaa::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit1ddbe4a32494cc166ee1d43f9f1c4aaa::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit1ddbe4a32494cc166ee1d43f9f1c4aaa::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }
