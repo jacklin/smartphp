@@ -25,19 +25,23 @@ class Index extends Controller
 		}
 	}
 	public function index(){
-		$process = new \swoole_process(function (\swoole_process $process) {
-			$url = 'http://appdown.7723.cn/7723box/test/7723_release-v3.2.3_323_2017.11.17-17.10_dev_test.apk';
-			Tool\VirusArtists::setTempPath(RUNTIME_PATH);
-			$res = Tool\VirusArtists::scanUrlFile($url);
-		}, true);
-
-		$process->start();
-
-		$this->response()->write(json_encode($res));
-
-		$this->response()->write('Hello World1');
-		$this->response()->write('Hello World2');
-		$this->response()->end();
+		$res = null;
+	    try{
+	    	if (IS_CLI) {
+				$process = new \swoole_process(function (\swoole_process $process) {
+					$url = 'http://appdown.7723.cn/7723box/test/7723_release-v3.2.3_323_2017.11.17-17.10_dev_test.apk';
+					Tool\VirusArtists::setTempPath(RUNTIME_PATH);
+					$res = Tool\VirusArtists::scanUrlFile($url);
+				}, true);
+				$process->start();
+				$this->response()->write(json_encode($res));
+				$this->response()->end();
+	    	}else{
+	    		throw new \Exception("The method only can be used in PHP CLI mode.");
+	    	}
+	      }catch (\Exception $e){
+			throw new \Exception("Error:".$e->getMessage());
+	      }
 
 	}
 }
