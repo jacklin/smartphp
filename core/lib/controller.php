@@ -14,6 +14,7 @@ class Controller
 		empty($response) ? "" : $this->response = $response;
 		$this->_initial();
 	}
+
 	protected function _initial(){
 
 	}
@@ -25,7 +26,7 @@ class Controller
 	 * @return   boolean                  [description]
 	 */
 	protected function isGet(){
-		if (strtolower(Route::requestCategory()) == 'get') {
+		if (strtolower(Route::requestCategory($this->request)) == 'get') {
 			return true;
 		}else{
 			return false;
@@ -39,11 +40,14 @@ class Controller
 	 * @return   boolean                  [description]
 	 */
 	protected function isPost(){
-		if (strtolower(Route::requestCategory()) == 'post') {
+		if (strtolower(Route::requestCategory($this->request)) == 'post') {
 			return true;
 		}else{
 			return false;
 		}
+	}
+	protected function getRequestData($name=''){
+		return Route::getRequestParam($this->request,$name);
 	}
 	/**
 	 * 响应方法

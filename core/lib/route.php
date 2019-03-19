@@ -1,5 +1,6 @@
 <?php 	
 namespace core\lib;
+
 /**
 * 	路由类
 */
@@ -27,13 +28,20 @@ class Route
 	private static $route;
 
 	/**
+	 * 请求数据对象
+	 * @var object
+	 */
+	private $request = null;
+	/**
 	 * 路由类构造方法
 	 * BaZhang Platform
 	 * @Author   Jacklin@shouyiren.net
 	 * @DateTime 2017-07-28T14:18:40+0800
 	 */
 	public function __construct($request){
-
+		if ($request instanceof \Swoole\Http\Request) {
+			$this->request = $request;
+		}
 	 	$request_uri = $_SERVER['REQUEST_URI']??$request->server['request_uri'];
 
 	 	$uri_arrays = explode('/', trim($request_uri,'/'));
@@ -144,15 +152,27 @@ class Route
 	 * @param    string                   $name 希望获取的参数
 	 * @return   array                         
 	 */
-	public static function getRequestParam($name=''){
+	public static function getRequestParam($request = '', $name=''){
 		if (empty($name)) {
-			return self::getInstance()->requestParam;
+			if (!empty(self::getInstance($request)->request)) {
+				$request_method = strtolower(self::requestCategory($request));//请求方法
+				$request_data=self::getInstance($request)->request->$request_method;//请求数据
+				self::getInstance($request)->setRequestParam($request_data);
+				return $request_data;
+			}else{
+				throw new Exception("Error Processing Request");
+			}
+			return self::getInstance($request)->requestParam;
 		}else{
-			return self::getInstance()->requestParam[$name]??'';
+			return self::getInstance($request)->requestParam[$name]??'';
 		}
 	}
 
-	public static function requestCategory(){
-		return ($_SERVER['REQUEST_METHOD']);
+	public static function requestCategory($request = ''){
+		if (isset($_SERVER['REQUEST_METHOD'])) {
+			return $_SERVER['REQUEST_METHOD'];
+		}else{
+		 return self::getInstance($request)->request->server['request_method'];
+		}
 	}
 }
