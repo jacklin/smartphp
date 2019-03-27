@@ -9,5 +9,6 @@ require __DIR__ . DS. 'database.inc.php';
  * 启动框架
  */
 \core\Smart::run();
+
 //启动服务器
 require APP_PATH . DS . DEFAULT_MODULE . DS . 'server.php';

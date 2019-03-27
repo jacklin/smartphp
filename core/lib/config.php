@@ -65,7 +65,6 @@ class Config
         if (is_file($file)) {
             $name = strtolower($name);
             $type = pathinfo($file, PATHINFO_EXTENSION);
-
             if ('php' == $type) {
                 return self::set(include $file, $name, $range);
             }
@@ -110,7 +109,6 @@ class Config
     public static function get($name = null, $range = '')
     {
         $range = $range ?: self::$range;
-
         // 无参数时获取所有
         if (empty($name) && isset(self::$config[$range])) {
             return self::$config[$range];
@@ -123,17 +121,45 @@ class Config
         }
 
         // 二维数组设置和获取支持
-        $name    = explode('.', $name, 2);
+        $name    = explode('.', $name);
+        $c_name = count($name);
         $name[0] = strtolower($name[0]);
         if (!isset(self::$config[$range][$name[0]])) {
             // 动态载入额外配置
             $file   = strtolower(APP_PATH) . DS. strtolower(DEFAULT_MODULE) .DS. 'extra' . DS . $name[0] . CONF_EXT;
             is_file($file) && self::load($file, $name[0]);
         }
+        if ($c_name == 2) {//二维数组
+            if ($name[1] == "") {
+               return isset(self::$config[$range][$name[0]]) ?
+                self::$config[$range][$name[0]] :
+                null;
+            }
+            return isset(self::$config[$range][$name[0]][$name[1]]) ?
+                self::$config[$range][$name[0]][$name[1]] :
+                null;
+        }elseif ($c_name == 3) {//三维数组
+           if ($name[1] == "" || $name[2] == "" ) {
+              return isset(self::$config[$range][$name[0]]) ?
+               self::$config[$range][$name[0]] :
+               null;
+           }
+           return isset(self::$config[$range][$name[0]][$name[1]][$name[2]]) ?
+               self::$config[$range][$name[0]][$name[1]][$name[2]] :
+               null;
+        }elseif ($c_name == 3) {//四维数组
+           if ($name[1] == "" || $name[2] == "" || $name[3] == "" ) {
+              return isset(self::$config[$range][$name[0]]) ?
+               self::$config[$range][$name[0]] :
+               null;
+           }
+           return isset(self::$config[$range][$name[0]][$name[1]][$name[2]]) ?
+               self::$config[$range][$name[0]][$name[1]][$name[2]] :
+               null;
 
-        return isset(self::$config[$range][$name[0]][$name[1]]) ?
-            self::$config[$range][$name[0]][$name[1]] :
-            null;
+        }else{
+            throw new \Exception("Error Array the dimension too deep");
+        }
     }
 
     /**
@@ -156,10 +182,20 @@ class Config
                 self::$config[$range][strtolower($name)] = $value;
             } else {
                 // 二维数组
-                $name = explode('.', $name, 2);
-                self::$config[$range][strtolower($name[0])][$name[1]] = $value;
+                $str ='' ;
+                $name = explode('.', strtolower($name));
+                $c_name = count($name);//计算几维数组
+                if ($c_name == 2) {//二维度
+                    self::$config[$range][$name[0]][$name[1]] = $value;
+                }elseif ($c_name == 3) {//三维度
+                    self::$config[$range][$name[0]][$name[1]][$name[2]] = $value;
+                }elseif ($c_name == 4) {//四维度
+                    self::$config[$range][$name[0]][$name[1]][$name[2]][$name[3]]  = $value;
+                }else{//最大维度
+                    throw new \Exception("Error Array the dimension too deep");
+                }
+                
             }
-
             return $value;
         }
 
@@ -169,10 +205,8 @@ class Config
                 self::$config[$range][$value] = isset(self::$config[$range][$value]) ?
                     array_merge(self::$config[$range][$value], $name) :
                     $name;
-
                 return self::$config[$range][$value];
             }
-
             return self::$config[$range] = array_merge(
                 self::$config[$range], array_change_key_case($name)
             );

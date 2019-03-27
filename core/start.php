@@ -35,7 +35,7 @@ class Smart
 		}
 		try {
 			spl_autoload_register("self::autoLoad");
-			IS_CLI?'':self::initRoute('','');
+			IS_CLI?check_cli_env():self::initRoute('','');
 		} catch (Exception $e) {
 			dd($e->getMessage());
 		}

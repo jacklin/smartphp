@@ -1,8 +1,6 @@
 <?php 
-
 //引入框架入口文件
 require_once(__DIR__ . DIRECTORY_SEPARATOR .'core.php');
-
 //系统环境
 define('ENV','remote');
 // 导入数据库环境配置
