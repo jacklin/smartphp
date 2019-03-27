@@ -2,7 +2,7 @@
 //目录分隔符定义
 define('DS',DIRECTORY_SEPARATOR);
 //项目主目录
-define('ROOT_PATH',realpath('./'));
+define('ROOT_PATH',__DIR__);
 //核心程序目录
 define('CORE',ROOT_PATH.DS.'core');
 //应用名称
