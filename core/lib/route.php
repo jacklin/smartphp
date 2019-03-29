@@ -156,7 +156,22 @@ class Route
 		if (empty($name)) {
 			if (!empty(self::getInstance($request)->request)) {
 				$request_method = strtolower(self::requestCategory($request));//请求方法
-				$request_data=self::getInstance($request)->request->$request_method;//请求数据
+				switch ($request_method) {
+					case 'head':
+						$request_data = [];	
+						break;
+					case 'post':
+						# code...
+						$request_data=self::getInstance($request)->request->$request_method;//请求数据
+						break;
+					case 'get':
+						# code...
+						$request_data=self::getInstance($request)->request->$request_method;//请求数据
+						break;
+					default:
+						$request_data = [];
+						break;
+				}
 				self::getInstance($request)->setRequestParam($request_data);
 				return $request_data;
 			}else{
