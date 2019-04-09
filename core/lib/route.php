@@ -84,11 +84,23 @@ class Route
 	 */
 	private static function getInstance($request=''){
 		if (self::$route instanceof self) {
+			empty($request)?:self::$route->setRequest($request);
 			return self::$route;
 		}else{
 			self::$route = new self($request);
 			return self::$route;
 		}
+	}
+	/**
+	 * 设置请求对象
+	 * BaZhang Platform
+	 * @Author   Jacklin@shouyiren.net
+	 * @DateTime 2019-04-09T16:54:21+0800
+	 * @param    \Swoole\Http\Request                   $request 请求对象
+	 */
+	private function setRequest($request=''){
+		$this->request = $request;
+		return $this;
 	}
 	/**
 	 * 注册GET路由
