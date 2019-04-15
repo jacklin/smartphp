@@ -84,7 +84,7 @@ class Route
 	 */
 	private static function getInstance($request=''){
 		if (self::$route instanceof self) {
-			empty($request)?:self::$route->setRequest($request);
+			empty($request)?self::$route->setRequest(new Request()):self::$route->setRequest($request);
 			return self::$route;
 		}else{
 			self::$route = new self($request);
@@ -187,19 +187,22 @@ class Route
 				self::getInstance($request)->setRequestParam($request_data);
 				return $request_data;
 			}else{
-				throw new Exception("Error Processing Request");
+				throw new \Exception("Error Processing Request");
 			}
 			return self::getInstance($request)->requestParam;
 		}else{
 			return self::getInstance($request)->requestParam[$name]??'';
 		}
 	}
-
+	/**
+	 * 获取请求类型
+	 * BaZhang Platform
+	 * @Author   Jacklin@shouyiren.net
+	 * @DateTime 2019-04-15T14:51:36+0800
+	 * @param    string                   $request [description]
+	 * @return   [type]                            [description]
+	 */
 	public static function requestCategory($request = ''){
-		if (isset($_SERVER['REQUEST_METHOD'])) {
-			return $_SERVER['REQUEST_METHOD'];
-		}else{
-		 return self::getInstance($request)->request->server['request_method'];
-		}
+		return self::getInstance($request)->request->server['request_method'];
 	}
 }

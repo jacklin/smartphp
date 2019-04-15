@@ -6,152 +6,84 @@ namespace core\lib;
 */
 class Request
 {
-	/**
-	 * 访问控制器
-	 * @var string
-	 */
-	public $controller;
+
 	/**
 	 * 访问方法
 	 * @var string
 	 */
 	public $action;
 	/**
-	 * 请求参数;
+	 * $_SERVER;
 	 * @var mixed
 	 */
-	private $requestParam;
-	/**
-	 * 请求实例
-	 * @var Route
-	 */
-	private static $route;
+	public $server;
 
-	/**
-	 * 请求类构造方法
-	 * BaZhang Platform
-	 * @Author   Jacklin@shouyiren.net
-	 * @DateTime 2017-07-28T14:18:40+0800
-	 */
 	public function __construct(){
-	 	$request_uri = $_SERVER['REQUEST_URI']??'';
-	 	$uri_arrays = explode('/', trim($request_uri,'/'));
-	 	$i = 0;
-	 	if (isset($uri_arrays[$i]) && !empty($uri_arrays[$i])) {
-	 		if (strstr($uri_arrays[$i],'.php')) {
-	 			$i++;
-	 		}
-		 	$this->controller = $uri_arrays[$i]??'index';
-		 	$i++;
-	 		if (isset($uri_arrays[$i]) && !empty($uri_arrays[$i])) {
-	 			$this->action = $uri_arrays[$i];
-	 		}else{
-	 			$this->action = 'index';
-	 		}
-	 	}else{
-	 		$this->controller = 'index';
-	 		$this->action = 'index';
-	 	}
-	 	$i++;
-	 	//uri参数部份
-	 	$uri_param=array_slice($uri_arrays, $i);
-	 	$j = 0;
-	 	$request_param = [];//get参数 
-	 	while ( $j < count($uri_param)) {
-	 		if (isset($uri_param[$j+1])) {
-	 			$key = $uri_param[$j];
-	 			$request_param[$key] = $uri_param[$j+1];
-	 		}
-	 		$j+=2;
-	 	}
-	 	$this->setRequestParam($request_param);
+	 	$this->server = array_change_key_case($_SERVER);
 	}
 	/**
-	 * 获取实例化后的对象
+	 * get请求参数
 	 * BaZhang Platform
 	 * @Author   Jacklin@shouyiren.net
-	 * @DateTime 2017-07-28T14:18:57+0800
+	 * @DateTime 2019-04-15T14:38:28+0800
 	 * @return   [type]                   [description]
 	 */
-	private static function getInstance(){
-		if (self::$route instanceof self) {
-			return self::$route;
+	public function get(){
+		if (!empty($_GET)) {
+			return $_GET;
 		}else{
-			self::$route = new self();
-			return self::$route;
+			$request_uri = $this->server['request_uri'];
+		 	$uri_arrays = explode('/', trim($request_uri,'/'));
+		 	$i = 3;
+		 	//uri参数部份
+		 	$uri_param=array_slice($uri_arrays, $i);
+		 	$j = 0;
+		 	$request_param = [];//get参数 
+		 	while ( $j < count($uri_param)) {
+		 		if (isset($uri_param[$j+1])) {
+		 			$key = $uri_param[$j];
+		 			$request_param[$key] = $uri_param[$j+1];
+		 		}
+		 		$j+=2;
+		 	}
+		 	return $request_param;
 		}
 	}
 	/**
-	 * 注册GET请求
+	 * post请求参数
 	 * BaZhang Platform
 	 * @Author   Jacklin@shouyiren.net
-	 * @DateTime 2017-07-28T14:22:38+0800
+	 * @DateTime 2019-04-15T14:38:49+0800
 	 * @return   [type]                   [description]
 	 */
-	public static function get($routeAdd){
-		self::setRoute($routeAdd,'get');
-	}
-	private static function setRouteAdd($routeAdd,$routeCategroy){
-		if (is_array($routeAdd)) {
-			
-		}
-		switch ($routeCategroy) {
-			case 'get':
-				
-				break;
-			
-			default:
-				# code...
-				break;
-		}
+	public function post(){
+		return $_POST;
 	}
 	/**
-	 * 获取访问方法名称
+	 * 文件请求
 	 * BaZhang Platform
 	 * @Author   Jacklin@shouyiren.net
-	 * @DateTime 2017-07-28T16:31:44+0800
-	 * @return   string                   方法名称
-	 */
-	public static function getAction(){
-		return self::getInstance()->action;
-	}
-	/**
-	 * 获取访问控制器
-	 * BaZhang Platform
-	 * @Author   Jacklin@shouyiren.net
-	 * @DateTime 2017-07-28T16:32:20+0800
+	 * @DateTime 2019-04-15T14:39:03+0800
 	 * @return   [type]                   [description]
 	 */
-	public static function getController(){
-		return self::getInstance()->controller;
+	public function file(){
+		return $_FILE;
 	}
 	/**
-	 * 设置请求参数
+	 * server 信息
 	 * BaZhang Platform
 	 * @Author   Jacklin@shouyiren.net
-	 * @DateTime 2017-07-28T16:32:36+0800
-	 * @param    [type]                   $param [description]
+	 * @DateTime 2019-04-15T14:39:51+0800
+	 * @return   [type]                   [description]
 	 */
-	private function setRequestParam($param){
-		$this->requestParam = $param;
+	public function server(){
+		return $_SERVER;
 	}
-	/**
-	 * 获取请求参数与值
-	 * BaZhang Platform
-	 * @Author   Jacklin@shouyiren.net
-	 * @DateTime 2017-07-28T16:32:51+0800
-	 * @param    string                   $name 希望获取的参数
-	 * @return   array                         
-	 */
-	public static function getRequestParam($name=''){
-		if (empty($name)) {
-			return self::getInstance()->requestParam;
+	public function __get($name){
+		if (method_exists($this, $name)) {
+			return $this->$name();
 		}else{
-			return self::getInstance()->requestParam[$name]??'';
+			throw new \Exception("Notice: Undefined property:".$name);
 		}
-	}
-
-	public static function requestCategory(){
-		return ($_SERVER['REQUEST_METHOD']);
 	}
 }
