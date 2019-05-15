@@ -41,13 +41,31 @@ class Smart
 		}
 	}
 	/**
+	 * 命令执行方法
+	 * BaZhang Platform
+	 * @Author   Jacklin@shouyiren.net
+	 * @DateTime 2019-05-15T14:53:20+0800
+	 * @return   [type]                   [description]
+	 */
+	public static function cmdRun($ctrl='', $action='', $options=''){
+		if (!is_dir(RUNTIME_PATH)) {
+			mkdir(RUNTIME_PATH);
+		}
+		try {
+			spl_autoload_register("self::autoLoad");
+			self::initConsole($ctrl, $action, $options);
+		} catch (Exception $e) {
+			dd($e->getMessage());
+		}
+	}
+	/**
 	 * web执行方法
 	 * BaZhang Platform
 	 * @Author   Jacklin@shouyiren.net
 	 * @DateTime 2017-07-27T18:28:41+0800
 	 * @return   void                   [description]
 	 */
-	public static function webrun($request='', $response=''){
+	public static function webRun($request='', $response=''){
 		if (!is_dir(RUNTIME_PATH)) {
 			mkdir(RUNTIME_PATH);
 		}
@@ -90,6 +108,15 @@ class Smart
 			}
 		}
 	}
+	/**
+	 * 初始化路由
+	 * BaZhang Platform
+	 * @Author   Jacklin@shouyiren.net
+	 * @DateTime 2019-05-15T14:58:17+0800
+	 * @param    string                   $request  请求对象
+	 * @param    string                   $response 响应对象
+	 * @return   void                             无返回值
+	 */
 	private static function initRoute($request='', $response=''){
 		$action = self::parseName(Route::getAction($request));
 		$controller = self::parseName(Route::getController($request),1);
@@ -102,6 +129,27 @@ class Smart
 		 * @var [type]
 		 */
 		$result = $app->$action(Route::getRequestParam());
+	}
+	/**
+	 * 初始化控制台
+	 * BaZhang Platform
+	 * @Author   Jacklin@shouyiren.net
+	 * @DateTime 2019-05-15T14:58:02+0800
+	 * @param    string                   $ctrl   请求控制器
+	 * @param    string                   $action 请求控制器方法
+	 * @param    string                   $params 传入参数
+	 * @return   void                           无返回值
+	 */
+	private static function initConsole($ctrl='index', $action='index', $params=''){
+		$controller = $ctrl;
+		$action = $action;
+		$class = '\\'.APP_NAMESPACE.'\\'.DEFAULT_MODULE.'\\controller\\'.$controller;
+		$app = new $class();
+		/**
+		 * 访问应用方法
+		 * @var [type]
+		 */
+		$result = $app->$action($params);
 	}
 	/**
 	 * 解析类名

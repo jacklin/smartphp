@@ -77,6 +77,22 @@ if (!function_exists('command_parser')) {
 	    );
 	}
 }
+/**
+ * 解析命令参数
+ */
+if (!function_exists('options_parser')) {
+	function options_parser($options){
+		$args = [];
+		$_args = [];
+		if ($options) {
+			foreach ($options as $key => $value) {
+				$agrs=explode('=', $key);
+				$_args[$agrs[0]] = $agrs[1];
+			}
+		}
+		return $_args;
+	}
+}
 if (!function_exists('command_handler')) {
 	function command_handler(){
 	    $command = command_parser();
@@ -100,6 +116,10 @@ if (!function_exists('command_handler')) {
 	        case 'version':{
 	            echo "Project under construction.".PHP_EOL;
 	            break;
+	        }
+	        case 'cmd':{
+	        	cmd($command['options']);
+	        	break;
 	        }
 	        case 'help':
 	        default:{
@@ -158,14 +178,14 @@ if (!function_exists('start_server')) {
 
 	    //close
 	    $ws->on('close', function ($ser, $fd) {
-	        echo "Bye {$fd} \n";
+	        echo "Bye {$fd} ".PHP_EOL;
 	        // unset($access_object);
 	    });
 	    //request
 	    $ws->on('request', function ($request, $response) {
 	        // 接收http请求从get获取message参数的值，给用户推送
 	        //启动框架
-	        \core\Smart::webrun($request, $response);
+	        \core\Smart::webRun($request, $response);
 	         // $response->end("<h1>Hello Swoole. #".rand(1000, 9999)."</h1>");
 	    });
 	    $ws->start();
@@ -194,12 +214,12 @@ if (!function_exists('stop_server')) {
 	        $pid_file = $options['pid'];
 	    }
 	    if(!file_exists($pid_file)){
-	        echo "pid file :{$pid_file} not exist \n";
+	        echo "pid file :{$pid_file} not exist ".PHP_EOL;
 	        return;
 	    }
 	    $pid = file_get_contents($pid_file);
 	    if(!\swoole_process::kill($pid,0)){
-	        echo "pid :{$pid} not exist \n";
+	        echo "pid :{$pid} not exist ".PHP_EOL;
 	        return;
 	    }
 	    if(isset($options['f'])){
@@ -212,14 +232,14 @@ if (!function_exists('stop_server')) {
 	    while (true){
 	        usleep(1000);
 	        if(!\swoole_process::kill($pid,0)){
-	            echo "server stop at ".date("Y-m-d h:i:s")."\n";
+	            echo "server stop at ".date("Y-m-d h:i:s")."".PHP_EOL;
 	            if(is_file($pid_file)){
 	                unlink($pid_file);
 	            }
 	            break;
 	        }else{
 	            if(time() - $time > 2){
-	                echo "stop server fail.try -f again \n";
+	                echo "stop server fail.try -f again ".PHP_EOL;
 	                break;
 	            }
 	        }
@@ -240,16 +260,27 @@ if (!function_exists('reload_server')) {
 	        $sig = SIGUSR1;
 	    }
 	    if(!file_exists($pid_file)){
-	        echo "pid file :{$pid_file} not exist \n";
+	        echo "pid file :{$pid_file} not exist ".PHP_EOL;
 	        return;
 	    }
 	    $pid = file_get_contents($pid_file);
 	    if(!\swoole_process::kill($pid,0)){
-	        echo "pid :{$pid} not exist \n";
+	        echo "pid :{$pid} not exist ".PHP_EOL;
 	        return;
 	    }
 	    \swoole_process::kill($pid,$sig);
-	    echo "send server reload command at ".date("Y-m-d h:i:s")."\n";
+	    echo "send server reload command at ".date("Y-m-d h:i:s")."".PHP_EOL;
+	}
+}
+if (!function_exists('cmd')) {
+	function cmd($options){
+		echo "------------SmartPHP 命令行模式------------".PHP_EOL;      
+		$args = options_parser($options);
+		$ctrl = $args['ctrl'];
+		$action = $args['action'];
+		$options = $args['agrs'];
+		//启动框架命令模式
+		\core\Smart::cmdRun($ctrl,$action,$options);
 	}
 }
 if (!function_exists('server_help')) {
@@ -261,38 +292,47 @@ if (!function_exists('server_help')) {
 	    }
 	    switch ($opName){
 	        case 'start':{
-	            echo "------------SmartPHP 启动命令------------\n";
-	            echo "执行php server.php start 即可启动服务。启动可选参数为:\n";
-	            echo "--d                       是否以系统守护模式运行\n";
-	            echo "--p            			指定服务监听端口如 start --p=9502 \n";
-	            echo "--pid           		指定服务PID存储文件 如start --pid=/data/file-name.pid \n";
-	            echo "--worker			    设置worker进程数 如start --worker=5 \n";
+	            echo "------------SmartPHP 启动命令------------".PHP_EOL;
+	            echo "执行php server.php start 即可启动服务。启动可选参数为:".PHP_EOL;
+	            echo "--d                       是否以系统守护模式运行".PHP_EOL;
+	            echo "--p            			指定服务监听端口如 start --p=9502 ".PHP_EOL;
+	            echo "--pid           		指定服务PID存储文件 如start --pid=/data/file-name.pid ".PHP_EOL;
+	            echo "--worker			    设置worker进程数 如start --worker=5 ".PHP_EOL;
 	            break;
 	        }
 	        case 'stop':{
-	            echo "------------SmartPHP 停止命令------------\n";
-	            echo "执行php server.php stop 	即可停止服务。停止可选参数为:\n";
-	            echo "--pid        		指定服务PID存储文件 如stop --pid=/data/file-name.pid\n";
-	            echo "--f                   	强制停止服务\n";
+	            echo "------------SmartPHP 停止命令------------".PHP_EOL;
+	            echo "执行php server.php stop 	即可停止服务。停止可选参数为:".PHP_EOL;
+	            echo "--pid        		指定服务PID存储文件 如stop --pid=/data/file-name.pid".PHP_EOL;
+	            echo "--f                   	强制停止服务".PHP_EOL;
 	            break;
 	        }
 	        case 'reload':{
-	            echo "------------SmartPHP 重启命令------------\n";
-	            echo "执行php server.php reload	即可重启服务。重启可选参数为:\n";
-	            echo "--pid       		指定服务PID存储文件 如reload --pid=/data/file-name.pid\n";
-	            echo "--all             		是否重启所有进程，默认true\n";
+	            echo "------------SmartPHP 重启命令------------".PHP_EOL;
+	            echo "执行php server.php reload	即可重启服务。重启可选参数为:".PHP_EOL;
+	            echo "--pid       		指定服务PID存储文件 如reload --pid=/data/file-name.pid".PHP_EOL;
+	            echo "--all             		是否重启所有进程，默认true".PHP_EOL;
 	            break;
 	        }
 	        case 'update':{
 	            break;
 	        }
+	        case 'cmd':{
+				echo "------------SmartPHP 命令行模式------------".PHP_EOL;        	
+	        	echo "执行php console.php cmd".PHP_EOL;
+	        	echo "--ctrl			指定命令运行控制器,默认index如： --ctrl=index".PHP_EOL;
+	        	echo "--action			指定命令运行控制器的方法,默认index 如： --action=index".PHP_EOL;
+	        	echo "--agrs			指定命令运行控制方法器的参娄 如： --args={'a':1}".PHP_EOL;
+	        	break;
+	        }
 	        default:{
-	            echo "------------欢迎使用SmartPHP------------\n";
-	            echo "有关某个命令的详细信息，请使用 help 命令, 如help --start 可选参数为:\n";
-	            echo "--start            启动SmartPHP\n";
-	            echo "--stop             停止SmartPHP\n";
-	            echo "--reload           重启SmartPHP\n";
-	            echo "--update           更新框架文件\n";
+	            echo "------------欢迎使用SmartPHP------------".PHP_EOL;
+	            echo "有关某个命令的详细信息，请使用 help 命令, 如help --start 可选参数为:".PHP_EOL;
+	            echo "--start            启动SmartPHP".PHP_EOL;
+	            echo "--stop             停止SmartPHP".PHP_EOL;
+	            echo "--reload           重启SmartPHP".PHP_EOL;
+	            echo "--update           更新框架文件".PHP_EOL;
+	            echo "--cmd              进行命令行控制台".PHP_EOL;
 	        }
 	    }
 	}
