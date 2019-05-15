@@ -113,7 +113,6 @@ class Config
         if (empty($name) && isset(self::$config[$range])) {
             return self::$config[$range];
         }
-
         // 非二级配置时直接返回
         if (!strpos($name, '.')) {
             $name = strtolower($name);
@@ -128,6 +127,9 @@ class Config
             // 动态载入额外配置
             $file   = strtolower(APP_PATH) . DS. strtolower(DEFAULT_MODULE) .DS. 'extra' . DS . $name[0] . CONF_EXT;
             is_file($file) && self::load($file, $name[0]);
+            // 动态载入模埠配置
+            $file   = strtolower(APP_PATH) . DS. strtolower(DEFAULT_MODULE) .DS. 'config' . CONF_EXT;
+            is_file($file) && self::load($file);
         }
         if ($c_name == 2) {//二维数组
             if ($name[1] == "") {
