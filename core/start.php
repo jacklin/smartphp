@@ -2,6 +2,8 @@
 namespace core;
 
 use core\lib\Route;
+use core\lib\Config;
+
 /**
 * 
 */
@@ -48,6 +50,9 @@ class Smart
 	 * @return   [type]                   [description]
 	 */
 	public static function cmdRun($ctrl='', $action='', $options=''){
+		if (Config::get('app_ini.debug')) {
+			wlog(__FUNCTION__,'info','console');
+		}
 		if (!is_dir(RUNTIME_PATH)) {
 			mkdir(RUNTIME_PATH);
 		}
@@ -148,11 +153,17 @@ class Smart
 		$controller = $ctrl;
 		$action = $action;
 		$class = '\\'.APP_NAMESPACE.'\\'.DEFAULT_MODULE.'\\controller\\'.$controller;
+		if (Config::get('app_ini.debug')) {
+			wlog(__FUNCTION__,'info','console',['controller' => $controller,'action' => $action]);
+		}	
 		$app = new $class();
 		/**
 		 * 访问应用方法
 		 * @var [type]
 		 */
+		if (Config::get('app_ini.debug')) {
+			wlog(__FUNCTION__,'info','console',['params'=>$params]);
+		}
 		$result = $app->$action($params);
 	}
 	/**

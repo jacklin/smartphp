@@ -27,6 +27,11 @@ return [
 			'password' => CACHE_PWD_1,
 		]
 	],
+	'box_api' => [
+		'app_id' => '7723cn_android_phone_bbs',
+		'app_secret' => 'NEI3J72neSQMew4dz74V3wSJsrW51IQveJdq34o86pLyg53bFZ265FornlunZ92F', 
+		'api_url' => APP_API_URL,
+	],
 	/**
 	 * 接口响应代码
 	 */
@@ -38,5 +43,14 @@ return [
 		'4004' =>	'业务处理失败',
 		'4000' =>	'业务处理中断',
 		'4404' =>	'暂无数据',
+	],
+	'log' => [
+		'type' => '',
+		'default_log_path' => RUNTIME_PATH. DS . 'logs',
+		'default_log_name' => APP_NAME,
+		'default_log_suffix' => '.log'
+	],
+	'app_ini' =>[
+		'debug' => DEBUG
 	]
 ];

@@ -111,17 +111,17 @@
     },
     {
         "name": "php-curl-class/php-curl-class",
-        "version": "8.5.0",
-        "version_normalized": "8.5.0.0",
+        "version": "7.4.0",
+        "version_normalized": "7.4.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/php-curl-class/php-curl-class.git",
-            "reference": "2b387e3ef1c8a1d6116a1459c0e3e71643f86806"
+            "reference": "c15f23ce5d52a4c68b69640ed6510a9d2a98ec6f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/2b387e3ef1c8a1d6116a1459c0e3e71643f86806",
-            "reference": "2b387e3ef1c8a1d6116a1459c0e3e71643f86806",
+            "url": "https://api.github.com/repos/php-curl-class/php-curl-class/zipball/c15f23ce5d52a4c68b69640ed6510a9d2a98ec6f",
+            "reference": "c15f23ce5d52a4c68b69640ed6510a9d2a98ec6f",
             "shasum": ""
         },
         "require": {
@@ -129,14 +129,10 @@
             "php": ">=5.3"
         },
         "require-dev": {
-            "ext-gd": "*",
             "phpunit/phpunit": "*",
             "squizlabs/php_codesniffer": "*"
         },
-        "suggest": {
-            "ext-mbstring": "*"
-        },
-        "time": "2019-01-07T06:43:45+00:00",
+        "time": "2017-09-04T21:38:09+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -156,41 +152,78 @@
         "description": "PHP Curl Class makes it easy to send HTTP requests and integrate with web APIs.",
         "homepage": "https://github.com/php-curl-class/php-curl-class",
         "keywords": [
-            "API-Client",
             "api",
             "class",
             "client",
             "curl",
             "framework",
             "http",
-            "http-client",
-            "http-proxy",
+            "http client",
             "json",
             "php",
-            "php-curl",
-            "php-curl-library",
-            "proxy",
             "requests",
+            "rest",
             "restful",
-            "web-scraper",
-            "web-scraping ",
-            "web-service",
+            "web service",
             "xml"
         ]
     },
     {
-        "name": "jacklin/sign",
-        "version": "dev-develop",
-        "version_normalized": "dev-develop",
+        "name": "jacklin/request-box-sdk",
+        "version": "2.1",
+        "version_normalized": "2.1.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/jacklin/sign.git",
-            "reference": "4b30cce386486b74b4e2d0130b317ec5e1534132"
+            "url": "https://github.com/jacklin/mybox-sdk.git",
+            "reference": "e8d6a9da15ea0f69064b70572ca077988b7d96f1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/jacklin/sign/zipball/4b30cce386486b74b4e2d0130b317ec5e1534132",
-            "reference": "4b30cce386486b74b4e2d0130b317ec5e1534132",
+            "url": "https://api.github.com/repos/jacklin/mybox-sdk/zipball/e8d6a9da15ea0f69064b70572ca077988b7d96f1",
+            "reference": "e8d6a9da15ea0f69064b70572ca077988b7d96f1",
+            "shasum": ""
+        },
+        "require": {
+            "jacklin/sign": "^1.1",
+            "php-curl-class/php-curl-class": "^7.2"
+        },
+        "require-dev": {
+            "jacklin/sign": "^1.1",
+            "php-curl-class/php-curl-class": "^7.2"
+        },
+        "time": "2018-11-07T08:39:55+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "BaZhangApiTools": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Lin Jiancheng",
+                "email": "jacklin@shouyiren.net"
+            }
+        ],
+        "description": "use 7723 request box sdk"
+    },
+    {
+        "name": "jacklin/sign",
+        "version": "1.1.6",
+        "version_normalized": "1.1.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jacklin/sign.git",
+            "reference": "bab2a534f00bff4e8b4d4b8cb7cc08042e633868"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jacklin/sign/zipball/bab2a534f00bff4e8b4d4b8cb7cc08042e633868",
+            "reference": "bab2a534f00bff4e8b4d4b8cb7cc08042e633868",
             "shasum": ""
         },
         "require": {
@@ -200,9 +233,9 @@
         "require-dev": {
             "phpunit/phpunit": "^6.2"
         },
-        "time": "2019-03-08T09:28:39+00:00",
+        "time": "2019-03-27T09:19:17+00:00",
         "type": "library",
-        "installation-source": "source",
+        "installation-source": "dist",
         "autoload": {
             "psr-0": {
                 "Tool": "src/"
@@ -221,6 +254,191 @@
         "description": "用于API通用签名类",
         "keywords": [
             "sign"
+        ]
+    },
+    {
+        "name": "dragonmantank/cron-expression",
+        "version": "v2.3.0",
+        "version_normalized": "2.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/dragonmantank/cron-expression.git",
+            "reference": "72b6fbf76adb3cf5bc0db68559b33d41219aba27"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/72b6fbf76adb3cf5bc0db68559b33d41219aba27",
+            "reference": "72b6fbf76adb3cf5bc0db68559b33d41219aba27",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^7.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^6.4|^7.0"
+        },
+        "time": "2019-03-31T00:38:28+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.3-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Cron\\": "src/Cron/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Michael Dowling",
+                "email": "mtdowling@gmail.com",
+                "homepage": "https://github.com/mtdowling"
+            },
+            {
+                "name": "Chris Tankersley",
+                "email": "chris@ctankersley.com",
+                "homepage": "https://github.com/dragonmantank"
+            }
+        ],
+        "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
+        "keywords": [
+            "cron",
+            "schedule"
+        ]
+    },
+    {
+        "name": "psr/log",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/log.git",
+            "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+            "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2018-11-20T15:27:04+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Psr\\Log\\": "Psr/Log/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interface for logging libraries",
+        "homepage": "https://github.com/php-fig/log",
+        "keywords": [
+            "log",
+            "psr",
+            "psr-3"
+        ]
+    },
+    {
+        "name": "monolog/monolog",
+        "version": "1.24.0",
+        "version_normalized": "1.24.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Seldaek/monolog.git",
+            "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
+            "reference": "bfc9ebb28f97e7a24c45bdc3f0ff482e47bb0266",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0",
+            "psr/log": "~1.0"
+        },
+        "provide": {
+            "psr/log-implementation": "1.0.0"
+        },
+        "require-dev": {
+            "aws/aws-sdk-php": "^2.4.9 || ^3.0",
+            "doctrine/couchdb": "~1.0@dev",
+            "graylog2/gelf-php": "~1.0",
+            "jakub-onderka/php-parallel-lint": "0.9",
+            "php-amqplib/php-amqplib": "~2.4",
+            "php-console/php-console": "^3.1.3",
+            "phpunit/phpunit": "~4.5",
+            "phpunit/phpunit-mock-objects": "2.3.0",
+            "ruflin/elastica": ">=0.90 <3.0",
+            "sentry/sentry": "^0.13",
+            "swiftmailer/swiftmailer": "^5.3|^6.0"
+        },
+        "suggest": {
+            "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
+            "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
+            "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+            "ext-mongo": "Allow sending log messages to a MongoDB server",
+            "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
+            "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
+            "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
+            "php-console/php-console": "Allow sending log messages to Google Chrome",
+            "rollbar/rollbar": "Allow sending log messages to Rollbar",
+            "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
+            "sentry/sentry": "Allow sending log messages to a Sentry server"
+        },
+        "time": "2018-11-05T09:00:11+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Monolog\\": "src/Monolog"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jordi Boggiano",
+                "email": "j.boggiano@seld.be",
+                "homepage": "http://seld.be"
+            }
+        ],
+        "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
+        "homepage": "http://github.com/Seldaek/monolog",
+        "keywords": [
+            "log",
+            "logging",
+            "psr-3"
         ]
     }
 ]

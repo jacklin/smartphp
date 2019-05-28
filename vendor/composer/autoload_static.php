@@ -9,7 +9,12 @@ class ComposerStaticInit1ddbe4a32494cc166ee1d43f9f1c4aaa
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'Predis\\' => 7,
+        ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
         ),
         'K' => 
         array (
@@ -18,13 +23,22 @@ class ComposerStaticInit1ddbe4a32494cc166ee1d43f9f1c4aaa
         'C' => 
         array (
             'Curl\\' => 5,
+            'Cron\\' => 5,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
         'Predis\\' => 
         array (
             0 => __DIR__ . '/..' . '/predis/predis/src',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'Klein\\' => 
         array (
@@ -34,6 +48,10 @@ class ComposerStaticInit1ddbe4a32494cc166ee1d43f9f1c4aaa
         array (
             0 => __DIR__ . '/..' . '/php-curl-class/php-curl-class/src/Curl',
         ),
+        'Cron\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -42,6 +60,13 @@ class ComposerStaticInit1ddbe4a32494cc166ee1d43f9f1c4aaa
             'Tool' => 
             array (
                 0 => __DIR__ . '/..' . '/jacklin/sign/src',
+            ),
+        ),
+        'B' => 
+        array (
+            'BaZhangApiTools' => 
+            array (
+                0 => __DIR__ . '/..' . '/jacklin/request-box-sdk/src',
             ),
         ),
     );

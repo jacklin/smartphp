@@ -6,7 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Predis\\' => array($vendorDir . '/predis/predis/src'),
+    'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Klein\\' => array($vendorDir . '/klein/klein/src/Klein'),
     'Curl\\' => array($vendorDir . '/php-curl-class/php-curl-class/src/Curl'),
+    'Cron\\' => array($vendorDir . '/dragonmantank/cron-expression/src/Cron'),
 );

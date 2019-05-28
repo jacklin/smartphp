@@ -406,4 +406,14 @@ if (!function_exists('randomStr')) {
         return $password;
     }
 }
+if (!function_exists('wlog')) {
+	function wlog(string $msg, $logLevel='info', $channle='',$extension_msg=[]){
+		$log_file_name = core\lib\Config::get('log.default_log_path'). DS . core\lib\Config::get('log.default_log_name') . '_' . date('Y-m-d') .core\lib\Config::get('log.default_log_suffix');
 
+		$logger = new Monolog\Logger('cmdRun');
+		$handler = new Monolog\Handler\StreamHandler($log_file_name);
+		$logger->pushHandler($handler, Monolog\Logger::DEBUG);
+		$logger->$logLevel($msg,$extension_msg);
+		unset($logger,$handler);
+		}
+}

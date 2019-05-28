@@ -1,0 +1,155 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "957819a36e479fe52b65778dd0eb1e1d",
+    "packages": [
+        {
+            "name": "jacklin/request-box-sdk",
+            "version": "1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jacklin/mybox-sdk.git",
+                "reference": "8bb53053c9f4660f795c9d909bfe836be02333ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/jacklin/mybox-sdk/8bb53053c9f4660f795c9d909bfe836be02333ea.zip",
+                "reference": "8bb53053c9f4660f795c9d909bfe836be02333ea",
+                "shasum": ""
+            },
+            "require": {
+                "jacklin/sign": "^1.1",
+                "php-curl-class/php-curl-class": "^7.2"
+            },
+            "require-dev": {
+                "jacklin/sign": "^1.1",
+                "php-curl-class/php-curl-class": "^7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "BaZhangApiTools": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Lin Jiancheng",
+                    "email": "jacklin@shouyiren.net"
+                }
+            ],
+            "description": "use 7723 request box sdk",
+            "time": "2018-01-05T09:47:47+00:00"
+        },
+        {
+            "name": "jacklin/sign",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jacklin/sign.git",
+                "reference": "440db4693425226ce53a7645d884357f0d5c578d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/jacklin/sign/440db4693425226ce53a7645d884357f0d5c578d.zip",
+                "reference": "440db4693425226ce53a7645d884357f0d5c578d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.3 || ^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Tool": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Lin Jiancheng",
+                    "email": "jacklin@shouyiren.net"
+                }
+            ],
+            "description": "用于API通用签名类",
+            "keywords": [
+                "sign"
+            ],
+            "time": "2016-11-30T02:40:17+00:00"
+        },
+        {
+            "name": "php-curl-class/php-curl-class",
+            "version": "7.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-curl-class/php-curl-class.git",
+                "reference": "c15f23ce5d52a4c68b69640ed6510a9d2a98ec6f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/php-curl-class/php-curl-class/c15f23ce5d52a4c68b69640ed6510a9d2a98ec6f.zip",
+                "reference": "c15f23ce5d52a4c68b69640ed6510a9d2a98ec6f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "*",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Curl\\": "src/Curl/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Unlicense"
+            ],
+            "authors": [
+                {
+                    "name": "Zach Borboa"
+                }
+            ],
+            "description": "PHP Curl Class makes it easy to send HTTP requests and integrate with web APIs.",
+            "homepage": "https://github.com/php-curl-class/php-curl-class",
+            "keywords": [
+                "api",
+                "class",
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "json",
+                "php",
+                "requests",
+                "rest",
+                "restful",
+                "web service",
+                "xml"
+            ],
+            "time": "2017-09-04T21:38:09+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

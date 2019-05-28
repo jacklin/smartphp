@@ -1,0 +1,5 @@
+{
+    "require": {
+        "jacklin/request-box-sdk": "^1.8"
+    }
+}

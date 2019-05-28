@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Tool' => array($vendorDir . '/jacklin/sign/src'),
+    'BaZhangApiTools' => array($vendorDir . '/jacklin/request-box-sdk/src'),
 );

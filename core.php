@@ -40,6 +40,10 @@ switch (php_sapi_name()) {
 		break;
 }
 /**
+ * 设置默认时区
+ */
+date_default_timezone_set('Asia/Shanghai');
+/**
  * 引入框架函数库
  */
 require_once(CORE . DS. 'common' . DS . 'function.php');
