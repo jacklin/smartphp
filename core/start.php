@@ -128,7 +128,11 @@ class Smart
 		 * 访问应用方法
 		 * @var [type]
 		 */
-		$result = $app->$action(Route::getRequestParam());
+		if ($request) {
+			$result = $app->$action(Route::getRequestParam($request));
+		}else{
+			$result = $app->$action(Route::getRequestParam());
+		}
 	}
 	/**
 	 * 初始化控制台

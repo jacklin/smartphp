@@ -66,9 +66,7 @@ if (!function_exists('command_parser')) {
 	    foreach ($argv as $item){
 	        if(substr($item,0,2) === '--'){
 	            $temp = trim($item,"--");
-	            $temp = explode("-",$temp);
-	            $key = array_shift($temp);
-	            $options[$key] = array_shift($temp) ?: '';
+	            $options[] = $temp;
 	        }
 	    }
 	    return array(
@@ -86,8 +84,9 @@ if (!function_exists('options_parser')) {
 		$_args = [];
 		if ($options) {
 			foreach ($options as $key => $value) {
-				$agrs=explode('=', $key);
-				$_args[$agrs[0]] = $agrs[1];
+				$k_v=explode('=', $value);
+				list($k,$v) = $k_v;
+				$_args[$k] = $v;
 			}
 		}
 		return $_args;
@@ -274,22 +273,30 @@ if (!function_exists('reload_server')) {
 }
 if (!function_exists('cmd')) {
 	function cmd($options){
-		echo "------------SmartPHP 命令行模式------------".PHP_EOL;      
-		$args = options_parser($options);
-		$ctrl = $args['ctrl'];
-		$action = $args['action'];
-		$options = $args['agrs'];
-		//启动框架命令模式
-		\core\Smart::cmdRun($ctrl,$action,$options);
+		if (!empty($options)) {
+			echo "------------SmartPHP 命令行模式------------".PHP_EOL; 
+			$args = options_parser($options);
+			$ctrl = $args['ctrl'] ?? 'index';
+			$action = $args['action'] ?? 'index';
+			$options = $args['agrs'] ?? '';
+			//启动框架命令模式
+			\core\Smart::cmdRun($ctrl,$action,$options);
+		}else{
+			server_help('cmd');
+		}
 	}
 }
 if (!function_exists('server_help')) {
 	function server_help($options){
 	    $opName = '';
-	    $args = array_keys($options);
-	    if(isset($args[0])){
-	        $opName = $args[0];
-	    }
+		if (is_string($options)) {
+			$opName = $options;
+		}else{			
+		    $args = array_keys($options);
+		    if(isset($args[0])){
+		        $opName = $args[0];
+		    }
+		}
 	    switch ($opName){
 	        case 'start':{
 	            echo "------------SmartPHP 启动命令------------".PHP_EOL;
@@ -337,3 +344,66 @@ if (!function_exists('server_help')) {
 	    }
 	}
 }
+
+if (!function_exists('errorLog')) {
+    /**
+     * 日志
+     * @author xsl
+     */
+    function errorLog($msg,$type='error'){
+        $log_path = dirname($_SERVER['SCRIPT_FILENAME']) . DS .'runtime' . DS . 'log' . DS;
+        $filename = date('Ym') . '/' . date('d') . '.log';
+        $destination = $log_path . $filename;
+        $path = dirname($destination);
+        !is_dir($path) && mkdir($path, 0755, true);
+        if (!is_string($msg)) {
+            $msg = var_export($msg, true);
+        }
+        $msg = '[ ' . $type . ' ] ' . $msg . "\r\n";
+
+        return error_log($msg, 3, $destination);
+    }
+}
+if (!function_exists('objectToArray')) {
+    /**
+     * stdClass 对象转为数组
+     * X  Platform
+     * @author Jacklin
+     * @version V1.0.0
+     * @param   stdClass $obj 对象
+     * @return  array      返回数组
+     */
+    function objectToArray($obj){
+        $arr = [];
+        $_arr= is_object($obj) ? get_object_vars($obj) : $obj;
+        foreach($_arr as $key=> $val)
+        {
+            $val= (is_array($val) || is_object($val)) ? objectToArray($val) : $val;
+            $arr[$key] = $val;
+        }
+        return $arr;
+    }
+}
+if (!function_exists('randomStr')) {
+    /**
+     * 生成固定长度的随机字符串
+     * @author xsl
+     * @param $length int 长度
+     * @return string
+     */
+    function randomStr($length=16) {
+        // 密码字符集，可任意添加你需要的字符
+        $chars = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+        // 在 $chars 中随机取 $length 个数组元素键名
+        $keys = array_rand($chars, $length);
+        $password = '';
+        for ($i = 0; $i < $length; $i++) {
+            // 将 $length 个数组元素连接成字符串
+            $password .= $chars[$keys[$i]];
+        }
+        return $password;
+    }
+}
+
