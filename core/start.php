@@ -41,6 +41,9 @@ class Smart
 		} catch (Exception $e) {
 			dd($e->getMessage());
 		}
+		if (Config::get('app_ini.debug')) {
+			wlog(__FUNCTION__,'info');
+		}
 	}
 	/**
 	 * 命令执行方法
@@ -51,7 +54,7 @@ class Smart
 	 */
 	public static function cmdRun($ctrl='', $action='', $options=''){
 		if (Config::get('app_ini.debug')) {
-			wlog(__FUNCTION__,'info','console');
+			wlog(__FUNCTION__,'info','console',['ctrl' => $ctrl, 'action' => $action, 'options' => $options]);
 		}
 		if (!is_dir(RUNTIME_PATH)) {
 			mkdir(RUNTIME_PATH);
@@ -71,6 +74,9 @@ class Smart
 	 * @return   void                   [description]
 	 */
 	public static function webRun($request='', $response=''){
+		if (Config::get('app_ini.debug')) {
+			wlog(__FUNCTION__,'info','web',[$request]);
+		}
 		if (!is_dir(RUNTIME_PATH)) {
 			mkdir(RUNTIME_PATH);
 		}
@@ -123,9 +129,11 @@ class Smart
 	 * @return   void                             无返回值
 	 */
 	private static function initRoute($request='', $response=''){
-		$action = self::parseName(Route::getAction($request));
-		$controller = self::parseName(Route::getController($request),1);
-
+		$action = self::parseName(Route::getAction($request),1);
+		$controller = self::parseName(Route::getController($request));
+		if (Config::get('app_ini.debug')) {
+			wlog(__FUNCTION__,'info','',['action'=>$action,'controller'=>$controller]);
+		}
 		$class = '\\'.APP_NAMESPACE.'\\'.DEFAULT_MODULE.'\\controller\\'.$controller;
 
 		$app = new $class($request,$response);
