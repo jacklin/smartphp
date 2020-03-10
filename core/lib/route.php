@@ -42,7 +42,17 @@ class Route
 		if ($request instanceof \Swoole\Http\Request) {
 			$this->request = $request;
 		}
-	 	$request_uri = $_SERVER['REQUEST_URI']??$request->server['request_uri'];
+		$this->initRequest();
+	}
+	/**
+	 * 初始化
+	 * BaZhang Platform
+	 * @Author   Jacklin@shouyiren.net
+	 * @DateTime 2020-03-10T17:13:52+0800
+	 * @return   [type]                   [description]
+	 */
+	private function initRequest(){
+	 	$request_uri = $_SERVER['REQUEST_URI']??$this->request->server['request_uri'];
 
 	 	$uri_arrays = explode('/', trim($request_uri,'/'));
 	 	$i = 0;
@@ -73,8 +83,8 @@ class Route
 	 		}
 	 		$j+=2;
 	 	}
-	 	$this->setRequestParam($request_param);
-	}
+	   $this->setRequestParam($request_param);
+	 }
 	/**
 	 * 获取实例化后的对象
 	 * BaZhang Platform
@@ -84,8 +94,12 @@ class Route
 	 */
 	private static function getInstance($request=''){
 		if (self::$route instanceof self) {
-			empty($request)?self::$route->setRequest(new Request()):self::$route->setRequest($request);
-			return self::$route;
+			if (empty($request)) {
+				$instance = self::$route->setRequest(new Request());
+			}else{
+				$instance = self::$route->setRequest($request);
+			}
+			return $instance;
 		}else{
 			self::$route = new self($request);
 			return self::$route;
@@ -100,6 +114,7 @@ class Route
 	 */
 	private function setRequest($request=''){
 		$this->request = $request;
+		$this->initRequest();
 		return $this;
 	}
 	/**
